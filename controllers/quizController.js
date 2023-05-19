@@ -6,11 +6,8 @@ const Quiz = require("../models/quizModel");
 //@route GET /api/quiz
 //@access private
 const getQuizzes = asyncHandler(async (req, res) => {
-    res.send("1");
     const quiz = await Quiz.find();
-    res.send("quiz:",quiz);
     res.status(200).json(quiz);
-    res.send("res:",res);
 });
 
 //@desc Get a quiz from id

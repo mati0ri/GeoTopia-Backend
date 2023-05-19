@@ -86,6 +86,16 @@ const getQuestionsFromCategory = asyncHandler(async (req, res) => {
 });
 
 
+//@desc Get all questions from a category
+//@route GET /api/question/category/:categoryName?limit=3
+//@access private
+const getAllQuestionsFromCategory = asyncHandler(async (req, res) => {
+    const categoryName = req.params.categoryName;
+    const questions = await Question.find({ category: categoryName });
+    res.status(200).json(questions);
+});
+
+
 //@desc Get a variable number of questions from a category and difficulty
 //@route GET /api/question/category/:categoryName/difficulty/:difficulty?limit=3
 //@access private
@@ -114,4 +124,4 @@ const getQuestionsByCategoryAndDifficulty = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { getQuestions, createQuestion, getQuestion, updateQuestion, deleteQuestion, getQuestionsFromCategory, getQuestionsByCategoryAndDifficulty };
+module.exports = { getQuestions, createQuestion, getQuestion, updateQuestion, deleteQuestion, getQuestionsFromCategory, getQuestionsByCategoryAndDifficulty, getAllQuestionsFromCategory };

@@ -18,6 +18,12 @@ app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/quiz", require("./routes/quizRoutes"));
 app.use("/api/proposition", require("./routes/enAttenteRoutes"));
 
+
+app.get("/api/test", (req, res) => {
+    res.send("api ok");
+});
+
+
 app.use(errorHandler);
 
 app.listen(port, () => {

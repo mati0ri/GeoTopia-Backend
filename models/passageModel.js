@@ -12,6 +12,8 @@ const passageSchema = mongoose.Schema({
     score: {
         type: Number,
         required: [true, "Add a score"],
+        min: [0, 'Score should not be less than 0'],
+        max: [100, 'Score should not be more than 100']
     }
 }, {
     timestamps: true,

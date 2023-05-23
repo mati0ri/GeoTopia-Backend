@@ -13,13 +13,20 @@ const createPassage = asyncHandler(async (req, res) => {
         throw new Error("All fields are mandatory");
     }
 
-    const createdPassage = await Passage.create({
-        idQuiz,
-        pseudo,
-        score
-    });
-
-    res.status(201).json(createdPassage);
+    try {
+        const createdPassage = await Passage.create({
+            idQuiz,
+            pseudo,
+            score
+        });
+        res.status(201).json(createdPassage);
+    } catch (error) {
+        if (error.name === 'ValidationError') {
+            res.status(400);
+            throw new Error(error.message);
+        }
+        throw error; // Si ce n'est pas une erreur de validation, relancer l'erreur
+    }
 });
 
 //@desc Get 5 best passages from quizId
@@ -92,18 +99,30 @@ const updatePassage = asyncHandler(async (req, res) => {
 
     if (!passage) {
         // If no passage is found, create a new one
-        passage = new Passage({ idQuiz: quizId, pseudo: pseudo, score: score });
-
-        await passage.save();
-
-        res.status(201).json(passage); // Return a 201 Created status
+        try {
+            passage = new Passage({ idQuiz: quizId, pseudo: pseudo, score: score });
+            await passage.save();
+            res.status(201).json(passage); // Return a 201 Created status
+        } catch (error) {
+            if (error.name === 'ValidationError') {
+                res.status(400);
+                throw new Error(error.message);
+            }
+            throw error; // Si ce n'est pas une erreur de validation, relancer l'erreur
+        }
     } else {
         // If a passage is found, update it
-        passage.score = score;
-
-        await passage.save();
-
-        res.status(200).json(passage);
+        try {
+            passage.score = score;
+            await passage.save();
+            res.status(200).json(passage);
+        } catch (error) {
+            if (error.name === 'ValidationError') {
+                res.status(400);
+                throw new Error(error.message);
+            }
+            throw error; // Si ce n'est pas une erreur de validation, relancer l'erreur
+        }
     }
 });
 

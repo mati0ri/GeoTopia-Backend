@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async (req, res) => {
         email,
         password: hashedPassword,
         role: "user",
-        titre: "l'astéroïde'",
+        titre: "l'astéroïde",
         scoreTot: 0
     });
 

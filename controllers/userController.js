@@ -72,7 +72,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 scoreTot: user.scoreTot
             },
         }, process.env.ACCESS_TOKEN_SECERT,
-            { expiresIn: "1m" }
+            { expiresIn: "6h" }
         );
         console.log(accessToken);
         res.status(200).json({ accessToken });
